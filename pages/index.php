@@ -47,7 +47,7 @@
                 <form action="index.php" method="post" class="form-group">
 
                     <label for="nome_tipo">Tipo</label>
-                    <select id="nome_tipo" class="form-control" name="nome_tipo">
+                    <select id="nome_tipo" class="form-control action" name="nome_tipo">
                         <option selected>Escolha um</option>
 
                         <?php
@@ -58,7 +58,7 @@
                         $query_tipo = "SELECT id_tipo,nome_tipo  FROM tipo";
                         $result_tipo = mysqli_query($link, $query_tipo);
                         while ($row_tipo = mysqli_fetch_assoc($result_tipo)){
-                            @$opt_tipo = "<option value = '{$row_tipo['id_tipo']}'>{$row_tipo['nome_tipo']}</option>";
+                            @$opt_tipo .= "<option value = '{$row_tipo['id_tipo']}'>{$row_tipo['nome_tipo']}</option>";
                         }
                         echo $opt_tipo;
                         ?>
@@ -66,9 +66,9 @@
 
 
                     <label for="nome_sabor" style="padding-top: 5px;">Sabor</label>
-                    <select id="nome_sabor" class="form-control" name="nome_sabor">
+                    <select id="nome_sabor" class="form-control action" name="nome_sabor">
                         <option selected>Escolha um</option>
-                        <?php
+                        <?php /*
                         // Option Dinâmico no Drop-down
 
                         $query_sabor = "SELECT id_sabor,nome_sabor FROM sabor";
@@ -77,6 +77,7 @@
                             @$opt_sabor = "<option value = '{$row_sabor['id_sabor']}'>{$row_sabor['nome_sabor']}</option>";
                         }
                         echo $opt_sabor;
+                        */
                         ?>
                     </select>
 
@@ -112,9 +113,26 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+         $('#nome_tipo').change(function(){
+            var nome_tipo = $(this).val();
+            $.ajax({
+                url:'../banco/pega_sabor.php',
+                method: 'POST',
+                data:{id_tipo:id_tipo},
+                dataType:'text',
+                success:function(data){
+                    $(#nome_sabor).html(data);
+                }
+            });
+         });
+        });
+    </script>
 
 </body>
 </html>
