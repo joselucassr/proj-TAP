@@ -120,13 +120,18 @@
     <script type="text/javascript">
         $(document).ready(function(){
          $('#nome_tipo').on('change',function(){
-        var nome_tipo = $(this).val();
+            var id_tipo = $(this).val();
             $.ajax({
                 type:'POST',
                 url:'pega_sabor.php',
                 data:'id_tipo='+id_tipo,
                 success:function(html){
                     $('#nome_sabor').html(html);
+                }
+            });
+        });
+     });
+
     </script>
 
 </body>
