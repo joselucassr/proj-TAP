@@ -119,19 +119,14 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-         $('#nome_tipo').change(function(){
-            var nome_tipo = $(this).val();
+         $('#nome_tipo').on('change',function(){
+        var nome_tipo = $(this).val();
             $.ajax({
-                url:'../banco/pega_sabor.php',
-                method: 'POST',
-                data:{id_tipo:id_tipo},
-                dataType:'text',
-                success:function(data){
-                    $(#nome_sabor).html(data);
-                }
-            });
-         });
-        });
+                type:'POST',
+                url:'pega_sabor.php',
+                data:'id_tipo='+id_tipo,
+                success:function(html){
+                    $('#nome_sabor').html(html);
     </script>
 
 </body>
